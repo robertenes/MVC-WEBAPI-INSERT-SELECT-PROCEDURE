@@ -1,8 +1,20 @@
-﻿@model IEnumerable<INSERT_PROCEDURE_WEBABI.Models.TABLE_EMPLOYEE>
+@model IEnumerable<INSERT_PROCEDURE_WEBABI.Models.TABLE_EMPLOYEE>
 
-@{
-    ViewBag.Title = "Index";
-}
+<h2>MVC ENTITY PROCEDURE SELECT AND INSERT WITH WEBAPI</h2>
+<p>
+    @Html.ActionLink("Create New", "CreateEmployee")
+</p>
+<center>
+    <input type="text" id="EmployeeSearchTextBox" list="Data1" name="Employee" placeholder="Search..." />
+    <datalist id="Data1">
+        @foreach (var item in Model)
+        {
+            <option>@item.EMPLOYEENAME</option>
+        }
+    </datalist>
+</center>
+<table id="mytable" class="table">
+
 
 <h2>Index</h2>
 
@@ -25,6 +37,27 @@
         </th>
         <th></th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMPLOYEENAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMPLOYEESURNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMPLOYEEAGE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMPLOYEEMAIL)
+            </td>
+
+        </tr>
+    }
+</table>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 
 @foreach (var item in Model) {
     <tr>
@@ -45,3 +78,20 @@
 }
 
 </table>
+<script>
+    $("#EmployeeSearchTextBox").on("keyup", function () {
+        var value = $(this).val();
+        $("table tr").each(function (result) {
+            if (result !== 0) {
+                var id = $(this).find("td:nth-child(1)").text();
+                if (id.indexOf(value) !== 0 && id.toLowerCase().indexOf(value.toLowerCase()) < 0) {
+                    $(this).hide();
+                }
+                else {
+                    $(this).show();
+                }
+            }
+        });
+
+    });
+</script>
