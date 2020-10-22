@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TABLE_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMPLOYEENAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEESURNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEEAGE" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPLOYEEMAIL" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="PROC_EMP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="surname" Type="nvarchar" Mode="In" />
+          <Parameter Name="age" Type="nvarchar" Mode="In" />
+          <Parameter Name="mail" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="PROC_EMPLOYEE_SELECT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="EmployeeModelStoreContainer">
+          <EntitySet Name="TABLE_EMPLOYEE" EntityType="Self.TABLE_EMPLOYEE" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TABLE_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMPLOYEENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEESURNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEEAGE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPLOYEEMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="EmployeeEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TABLE_EMPLOYEE" EntityType="Self.TABLE_EMPLOYEE" />
+          <FunctionImport Name="PROC_EMP">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="surname" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="String" />
+            <Parameter Name="mail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_EMPLOYEE_SELECT" ReturnType="Collection(EmployeeModel.PROC_EMPLOYEE_SELECT_Result)" />
+        </EntityContainer>
+        <ComplexType Name="PROC_EMPLOYEE_SELECT_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="EMPLOYEENAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EMPLOYEESURNAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EMPLOYEEAGE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EMPLOYEEMAIL" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeModelStoreContainer" CdmEntityContainer="EmployeeEntity">
+          <EntitySetMapping Name="TABLE_EMPLOYEE">
+            <EntityTypeMapping TypeName="EmployeeModel.TABLE_EMPLOYEE">
+              <MappingFragment StoreEntitySet="TABLE_EMPLOYEE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EMPLOYEENAME" ColumnName="EMPLOYEENAME" />
+                <ScalarProperty Name="EMPLOYEESURNAME" ColumnName="EMPLOYEESURNAME" />
+                <ScalarProperty Name="EMPLOYEEAGE" ColumnName="EMPLOYEEAGE" />
+                <ScalarProperty Name="EMPLOYEEMAIL" ColumnName="EMPLOYEEMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_EMP" FunctionName="EmployeeModel.Store.PROC_EMP" />
+          <FunctionImportMapping FunctionImportName="PROC_EMPLOYEE_SELECT" FunctionName="EmployeeModel.Store.PROC_EMPLOYEE_SELECT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeModel.PROC_EMPLOYEE_SELECT_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EMPLOYEENAME" ColumnName="EMPLOYEENAME" />
+                <ScalarProperty Name="EMPLOYEESURNAME" ColumnName="EMPLOYEESURNAME" />
+                <ScalarProperty Name="EMPLOYEEAGE" ColumnName="EMPLOYEEAGE" />
+                <ScalarProperty Name="EMPLOYEEMAIL" ColumnName="EMPLOYEEMAIL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
